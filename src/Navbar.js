@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import Formphoto from './Formphoto';
 class Navbar extends Component {
     state = {
 
     }
-    handleClick(e) {
+    handleClick = (e) => {
         console.log(e.target);
     }
 
@@ -13,6 +14,7 @@ class Navbar extends Component {
                 <div>My photo Galary</div>
                 <input type="text" id="search" name="search" placeholder="search by name" />
                 <button onClick={this.handleClick}>Add a photo</button>
+                <Formphoto/>
             </div>
         )
     }
