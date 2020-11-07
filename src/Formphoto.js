@@ -26,7 +26,7 @@ class Formphoto extends Component {
                 <input type="text" id="label" name="label" placeholder="Enter photo name" /><br />
 
                 <label htmlFor="url">Photo URL:</label><br />
-                <input type="text" id="url" name="url" placeholder="Enter photo url" /><br />
+                <input type="url" id="url" name="url" placeholder="Enter photo url" /><br />
 
                 <label htmlFor="Password">Password:</label><br />
                 <input type="password" id="password" name="password" placeholder="Enter password photo" /><br />

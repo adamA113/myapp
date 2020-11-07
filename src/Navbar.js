@@ -19,9 +19,9 @@ class Navbar extends Component {
         return (
             <div className="app-content">
                 <div>My photo Galary</div>
-                <input type="text" id="search" name="search" placeholder="search by name" />
+                <input type="search" id="search" name="search" placeholder="search by name" />
                 <button onClick={this.handleClick}>Add a photo</button>
-                <Formphoto handleAdd={this.state.show} parentCallback={this.handleCallback}  />
+                <Formphoto handleAdd={this.state.show} parentCallback={this.handleCallback} />
             </div>
         )
     }
