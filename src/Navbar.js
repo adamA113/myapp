@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import Formphoto from './Formphoto';
 class Navbar extends Component {
-    state = {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false
+    
+        };
     }
     handleClick = (e) => {
-        console.log(e.target);
+        this.setState({ show: true });
+    }
+    handleCallback = (childData) => {
+        this.setState({ show: childData })
     }
 
     render() {
@@ -14,7 +21,7 @@ class Navbar extends Component {
                 <div>My photo Galary</div>
                 <input type="text" id="search" name="search" placeholder="search by name" />
                 <button onClick={this.handleClick}>Add a photo</button>
-                <Formphoto/>
+                <Formphoto handleAdd={this.state.show} parentCallback={this.handleCallback}  />
             </div>
         )
     }
