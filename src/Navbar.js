@@ -11,8 +11,12 @@ class Navbar extends Component {
     handleClick = (e) => {
         this.setState({ show: true });
     }
-    handleCallback = (Data) => {
-        this.setState({ show: Data })
+    // handleCallback = (Data) => {
+    //     this.setState({ show: Data })
+    // }
+    onTrigger = (event) => {
+        this.props.callback(true);
+        event.preventDefault();
     }
 
     render() {
@@ -20,8 +24,8 @@ class Navbar extends Component {
             <div className="app-content">
                 <div>My photo Galary</div>
                 <input type="search" id="search" name="search" placeholder="search by name" />
-                <button onClick={this.handleClick}>Add a photo</button>
-                <Formphoto handleAdd={this.state.show} callback={this.handleCallback} />
+                <button onClick={this.onTrigger}>Add a photo</button>
+                {/* <Formphoto handleAdd={this.state.show} callback={this.handleCallback} /> */}
             </div>
         )
     }
