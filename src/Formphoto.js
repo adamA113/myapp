@@ -12,7 +12,7 @@ class Formphoto extends Component {
     }
 
     onTrigger = (event) => {
-        this.props.parentCallback(false);
+        this.props.callback(false);
         event.preventDefault();
     }
 

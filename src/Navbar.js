@@ -11,8 +11,8 @@ class Navbar extends Component {
     handleClick = (e) => {
         this.setState({ show: true });
     }
-    handleCallback = (childData) => {
-        this.setState({ show: childData })
+    handleCallback = (Data) => {
+        this.setState({ show: Data })
     }
 
     render() {
@@ -21,7 +21,7 @@ class Navbar extends Component {
                 <div>My photo Galary</div>
                 <input type="search" id="search" name="search" placeholder="search by name" />
                 <button onClick={this.handleClick}>Add a photo</button>
-                <Formphoto handleAdd={this.state.show} parentCallback={this.handleCallback} />
+                <Formphoto handleAdd={this.state.show} callback={this.handleCallback} />
             </div>
         )
     }
