@@ -1,0 +1,29 @@
+.nav{
+    display:flex;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 2rem;
+    height: 2rem;
+    align-items: center;
+
+}
+
+
+#add{
+    border: none;
+    border-radius: 10px;
+    background-color: #158871;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #fff;
+    padding: 10px;
+}
+
+#search{
+    font-size: 1rem;
+    background: none;
+    border: 2px solid black;
+    padding: 10px;
+    border-radius: 20px;
+}
