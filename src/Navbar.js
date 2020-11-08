@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Navbar.css';
 import Formphoto from './Formphoto';
 class Navbar extends Component {
     constructor(props) {
@@ -21,10 +22,10 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div className="app-content">
+            <div className="nav">
                 <div>My photo Galary</div>
                 <input type="search" id="search" name="search" placeholder="search by name" />
-                <button onClick={this.onTrigger}>Add a photo</button>
+                <button id="add" onClick={this.onTrigger}>Add a photo</button>
                 {/* <Formphoto handleAdd={this.state.show} callback={this.handleCallback} /> */}
             </div>
         )
