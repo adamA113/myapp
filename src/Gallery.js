@@ -2,22 +2,22 @@
 // import Formphoto from './Formphoto';
 // import Photo from './Photo';
 
-// class Galary extends Component {
+// class Gallery extends Component {
 //     constructor(props) {
 //         super(props);
 //         this.state = {
-
+//             photos:[]
 //         };
 //     }
 //     render() {
 //         return (
 //             <div className="photo-list">
-//                 {/* {photos.map((photo) =>
-//                  <Photo key={ } photo={photo} handleMouseHover={ } />
-//                  )} */}
+//                 {this.state.photos.map((photo,index) =>
+//                     <Photo key={index} photo={photo} />
+//                  )}
 //             </div>
 //         );
 //     }
 // }
 
-// export default Galary;
+// export default Gallery;

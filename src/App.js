@@ -1,19 +1,27 @@
-// import './App.css';
+import './App.css';
 import React, { Component } from 'react';
 import Navbar from './Navbar';
 import Formphoto from './Formphoto';
+import Gallery from './Gallery';
 import Photo from './Photo';
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
+      photos: [],
       label: null,
       url: null,
       password: null
     };
-    // console.log(this.state)
+    console.log(this.state);
+  }
+
+  addPhoto = (photo) => {
+    let photos = [...this.state.photos, photo];
+    this.setState({
+      photos: photos
+    });
   }
   handleCallback = (Data) => {
     this.setState({ show: Data })
@@ -24,12 +32,13 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="main">
         <Navbar callback={this.handleCallback}/>
-        <Formphoto handleAdd={this.state.show} callback={this.handleCallback} callback1={this.handleCallback1}/>
+        <Formphoto handleAdd={this.state.show} callback={this.handleCallback} callback1={this.handleCallback1} addPhoto={this.addPhoto}/>
         <Photo photo={this.state}/>
-      </div>
+        {/* <Gallery photos={this.state.photos}/> */}
 
+      </div>
     );
   }
 }

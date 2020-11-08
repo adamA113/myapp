@@ -13,6 +13,7 @@ class Formphoto extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.callback1(this.state);
+        this.props.addPhoto(this.state);
         /////used to reset the form input after submission
         Array.from(document.querySelectorAll("input")).forEach(
             input => (input.value = "")
