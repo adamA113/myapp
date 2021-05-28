@@ -7,13 +7,14 @@ const pinsQuery = gql`
         pins {
             title
             description
+            imageId
         }
     }
 `
 const Gallery = () => {
     const [imageIds, setImageIds] = useState();
     const { loading, error, data } = useQuery(pinsQuery);
-    // console.log(data);
+    console.log("qraphql ===>", data);
     const loadImages = async () => {
         try {
             const res = await fetch('/api/images')

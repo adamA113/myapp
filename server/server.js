@@ -19,6 +19,10 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.static(__dirname + '../compiled/client/src'));
+app.use('/graphql', graphqlHTTP({
+    schema,
+    graphiql: true
+}));
 
 app.post('/api/upload', async (req, res) => {
     try {
@@ -48,12 +52,6 @@ app.get('/api/images', async (req, res) => {
 //     const publicIds = resources.map((file) => file.public_id);
 //     res.send(publicIds);
 // })
-
-
-app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true
-}));
 
 // app.use(function (req, res, next) {
 //     console.log("====", __dirname)

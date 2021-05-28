@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component } from 'react';
+import React from 'react';
 // import Navbar from './Navbar';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
@@ -21,7 +21,7 @@ function App() {
           <Formphoto handleAdd={this.state.show} callback={this.handleCallback} callback1={this.handleCallback1} addPhoto={this.addPhoto} />
           <Photo photo={this.state} /> */}
 				<UploadPhoto />
-				<Gallery />
+				{/* <Gallery /> */}
 			</div>
 		</ApolloProvider>
 

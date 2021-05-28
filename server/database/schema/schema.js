@@ -17,6 +17,7 @@ const PinType = new GraphQLObjectType({
         id: { type: GraphQLID },
         title: { type: GraphQLString },
         description: { type: GraphQLString },
+        imageId: { type: GraphQLString },
         user: {
             type: UserType,
             resolve(parent, args) {
@@ -46,6 +47,7 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         pin: {
             type: PinType,
+            description: 'A single Pin',
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
                 // code to get data from db / other source
@@ -54,6 +56,7 @@ const RootQuery = new GraphQLObjectType({
         },
         user: {
             type: UserType,
+            description: 'A single User',
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
                 return User.findById(args.id)
@@ -94,13 +97,15 @@ const Mutation = new GraphQLObjectType({
             args: {
                 title: { type: new GraphQLNonNull(GraphQLString) },
                 description: { type: new GraphQLNonNull(GraphQLString) },
-                userId: { type: new GraphQLNonNull(GraphQLID) }
+                userId: { type: new GraphQLNonNull(GraphQLID) },
+                imageId: { type: new GraphQLNonNull(GraphQLString) }
             },
             resolve(parent, args) {
                 let pin = new Pin({
                     title: args.title,
                     description: args.description,
-                    userId: args.userId
+                    userId: args.userId,
+                    imageId: args.imageId
                 });
                 return pin.save();
             },
