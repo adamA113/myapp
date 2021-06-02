@@ -13,6 +13,7 @@
 Pinterest uses a number of open source projects:
 * [React](https://reactjs.org/) - library for UI components.
 * [Redux](https://redux.js.org/) - library for managing application state.
+* [GraphQL](https://graphql.org/) - data query and manipulation language.
 
 ### Development
 To run this project on your local machine:
@@ -37,7 +38,18 @@ And finally type the following to run the front server:
 $ npm start
 ```
 #### Run the Back End side:
-
+Move inside the server folder:
+```
+$ cd server
+```
+Then type to install all the required dependencies:
+```
+$ npm install
+```
+And finally type the following to run the front server:
+```
+$ nodemon server
+```
 ### Deployment 
 In progress ...
 
