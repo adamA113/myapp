@@ -1,50 +1,62 @@
 const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-const schema = require('./database/schema/schema');
+// const { graphqlHTTP } = require('express-graphql');
+const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const cors = require('cors');
-const { cloudinary } = require('./utils/cloudinary')
 require('dotenv').config();
+
+const { cloudinary } = require('./utils/cloudinary');
+const typeDefs = require('./graphql/typeDefs');
+const resolvers = require('./graphql/resolvers');
 
 const app = express();
 
 // allow cross-origin requests
 app.use(cors());
 
-const dbURI = "mongodb+srv://adamA113:student@pinterest.wbf36.mongodb.net/pinterest-clone";
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+// set database
+const dbURI = process.env.MONGODB_URI;
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(result => console.log("db connected"))
     .catch(err => console.log(err));
 
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: "50MB", extended: true }));
+app.use(express.json({ limit: "50MB" }));
 app.use(express.static(__dirname + '../compiled/client/src'));
-app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true
-}));
 
-app.post('/api/upload', async (req, res) => {
-    try {
-        const fileStr = req.body.data;
-        // console.log("=====", req.body)
-        const uploadedResponse = await cloudinary.uploader.upload(fileStr, { upload_preset: 'pinterest' }, function (error, result) {
-            console.log(result)
-        })
-    }
-    catch (err) {
-        console.log(err);
-    }
-})
+// app.use('/api', createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
 
-app.get('/api/images', async (req, res) => {
-    const { resources } = await cloudinary.search.expression('folder:pics')
-        .sort_by('public_id', 'desc')
-        .max_results(30)
-        .execute();
-    const publicIds = resources.map((file) => file.public_id);
-    res.send(publicIds);
-})
+// app.use('/graphql', graphqlHTTP({
+//     schema: typeDefs,
+//     graphiql: true
+// }));
+
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// app.post('/upload', async (req, res) => {
+//     try {
+//         const fileStr = req.body.data;
+//         // console.log("=====", fileStr)
+//         const uploadedResponse = await cloudinary.uploader.upload(fileStr, { upload_preset: 'pinterest' }, function (error, result) {
+//             // console.log(result);
+//             // res.send({ test: result.public_id });
+//         })
+//         res.send(uploadedResponse.public_id)
+//     }
+//     catch (err) {
+//         console.log(err);
+//     }
+// })
+
+// app.get('/images', async (req, res) => {
+//     const { resources } = await cloudinary.search.expression('folder:pics')
+//         .sort_by('public_id', 'desc')
+//         .max_results(30)
+//         .execute();
+//     const publicIds = resources.map((file) => file.public_id);
+//     res.send(publicIds);
+// })
 
 // app.get('/api/images', async (req, res) => {
 //     const { resources } = await cloudinary.search.expression('public_id:pics/xnlaqgswmvbijosjt2yl')
@@ -60,11 +72,14 @@ app.get('/api/images', async (req, res) => {
 //     next();
 // });
 
-//listen for requests
-const port = process.env.PORT || 3001
-app.listen(port, () => {
-    console.log(`server is listening to ${port}`)
-})
+const port = process.env.PORT || 4000
+server.listen({ port: port }).then(() => {
+    console.log(`
+    🚀  Server is running!
+    🔉  Listening on port 4000
+    📭  Query at https://studio.apollographql.com/dev
+  `);
+});
 
 
 
