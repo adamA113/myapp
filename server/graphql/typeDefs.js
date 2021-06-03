@@ -17,8 +17,9 @@ const typeDefs = gql`
 
     type Mutation {
         userSignUp(registerInput: RegisterInput): User! 
-        addPin(title: String!, description: String!, imageURL: String!, userId: String!): Pin!
         userLogIn(email: String!, password: String!): User!
+        addPin(title: String!, description: String!, imageURL: String!, userId: String!): Pin!
+        deletePin(id: ID!): String!
     }
 
     type Pin {
