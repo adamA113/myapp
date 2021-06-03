@@ -44,7 +44,7 @@ const UserType = new GraphQLObjectType({
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
-    fields: {
+    fields: () => ({
         pin: {
             type: PinType,
             description: 'A single Pin',
@@ -74,12 +74,12 @@ const RootQuery = new GraphQLObjectType({
                 return User.find({})
             }
         }
-    }
+    })
 });
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
-    fields: {
+    fields: () => ({
         addUser: {
             type: UserType,
             args: {
@@ -97,7 +97,7 @@ const Mutation = new GraphQLObjectType({
             args: {
                 title: { type: new GraphQLNonNull(GraphQLString) },
                 description: { type: new GraphQLNonNull(GraphQLString) },
-                userId: { type: new GraphQLNonNull(GraphQLID) },
+                userId: { type: new GraphQLNonNull(GraphQLString) },
                 imageId: { type: new GraphQLNonNull(GraphQLString) }
             },
             resolve(parent, args) {
@@ -110,7 +110,7 @@ const Mutation = new GraphQLObjectType({
                 return pin.save();
             },
         }
-    }
+    })
 })
 
 module.exports = new GraphQLSchema({

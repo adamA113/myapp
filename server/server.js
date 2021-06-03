@@ -6,7 +6,6 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const cors = require('cors');
 require('dotenv').config();
 
-const { cloudinary } = require('./utils/cloudinary');
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
 
@@ -17,6 +16,7 @@ app.use(cors());
 
 // set database
 const dbURI = process.env.MONGODB_URI;
+// console.log(dbURI)
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(result => console.log("db connected"))
     .catch(err => console.log(err));

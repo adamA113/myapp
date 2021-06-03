@@ -1,61 +1,22 @@
 import React, { useState } from 'react';
-import $ from "jquery";
+import { useMutation } from '@apollo/client';
+// import axios from "axios";
+// import $ from "jquery";
 import './UploadPhoto.css';
 
+import { AddPin, UserSignUp } from '../queries/queries';
+
 const UploadPhoto = () => {
-    //selecting all required elements
-    // $(function () {
-    //     const dropArea = document.querySelector(".drag-area");
-    //     // const input = dropArea.querySelector("input");
-    //     // console.log("++++++++", input)
-
-    //     dropArea.addEventListener("dragover", (event) => {
-    //         event.preventDefault();
-    //         dropArea.classList.add("active");
-    //         // dragText.textContent = "Release to Upload File";
-    //     });
-
-    //     dropArea.addEventListener("dragleave", () => {
-    //         dropArea.classList.remove("active");
-    //         // dragText.textContent = "Drag & Drop to Upload File";
-    //     });
-
-    //     dropArea.addEventListener("drop", (event) => {
-    //         event.preventDefault();
-    //         let file = event.dataTransfer.files[0];
-    //         showFile(file);
-    //     });
-
-    //     // input.addEventListener("change", function (event) {
-    //     //     let file = event.target.files[0];
-    //     //     dropArea.classList.add("active");
-    //     //     showFile(file); 
-    //     // });
-
-    //     function showFile(file) {
-    //         let fileType = file.type;
-    //         let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
-    //         if (validExtensions.includes(fileType)) {
-    //             let fileReader = new FileReader();
-    //             fileReader.onload = () => {
-    //                 let fileURL = fileReader.result;
-    //                 let imgTag = `<img src="${fileURL}" alt="image">`;
-    //                 dropArea.innerHTML = imgTag;
-    //             }
-    //             fileReader.readAsDataURL(file);
-    //         } else {
-    //             alert("This is not an Image File!");
-    //             dropArea.classList.remove("active");
-    //             removeImg.classList.remove("show");
-    //             // dragText.textContent = "Drag & Drop to Upload File";
-    //         }
-    //     }
-    // })
-
+    const [addPin] = useMutation(AddPin);
 
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
     const [errMessage, setErrMessage] = useState('');
+    const [formData, setFormData] = useState({
+        title: null,
+        description: null,
+        userId: "60b6a483f7931b08344870c4",
+    })
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -89,22 +50,43 @@ const UploadPhoto = () => {
     }
 
     const uploadImage = async (source) => {
-        // console.log(source);
+        console.log(source);
         try {
-            await fetch('/api/upload', {
-                method: 'POST',
-                body: JSON.stringify({ data: source }),
-                headers: { 'Content-Type': 'application/json' }
-            })
+            addPin({
+                variables: {
+                    title: formData.title,
+                    description: formData.description,
+                    imageURL: source,
+                    userId: formData.userId
+                }
+            });
             setFileInputState('');
             setPreviewSource('');
         }
         catch (err) {
             console.log(err);
         }
+
+
+        // await fetch('http://localhost:3001/upload', {
+        //     method: 'POST',
+        //     body: JSON.stringify({ data: source }),
+        //     headers: { 'Content-Type': 'application/json' }
+        // })
+        //     .then((response) => {
+        //         console.log("before", response);
+        //     })
+        //     .catch(error => console.error(error))
+
     }
 
-    const handleClick = (e) => {
+    const handleChange = (e) => {
+        setFormData({
+            ...formData, [e.target.id]: e.target.value
+        })
+    }
+
+    const handleRemoveClick = (e) => {
         setPreviewSource('');
         document.querySelector(".remove-img").classList.remove("show");
     }
@@ -113,8 +95,11 @@ const UploadPhoto = () => {
         <div>
             <h1>Upload an Image</h1>
             <form onSubmit={handleSubmitFile}>
-                <div className="img-preview">
+                <textarea onChange={handleChange} id="title" placeholder="Add you title" maxLength="100" cols="50" required></textarea><br />
 
+                <textarea onChange={handleChange} id="description" placeholder="Tell everyone what is your pin about" maxLength="500" cols="50" required></textarea>
+
+                <div className="img-preview">
                     <div className="drag-area">
                         <div className="drag-area-info">
                             {/* <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div> */}
@@ -124,11 +109,10 @@ const UploadPhoto = () => {
                         </div>
 
                         {previewSource && (<img src={previewSource} alt="string representing the input img" />)}
-
                         <input type="file" onChange={handleFileChange} value={fileInputState} />
                     </div>
 
-                    <div className="remove-img" onClick={handleClick}><i className="fas fa-trash"></i></div>
+                    <div className="remove-img" onClick={handleRemoveClick}><i className="fas fa-trash"></i></div>
                 </div>
 
                 <button className="submit-btn" type="submit">Submit</button>
