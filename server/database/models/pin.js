@@ -17,7 +17,14 @@ const pinSchema = new Schema({
     userId: {
         type: String,
         required: true
-    }
+    },
+    comments: [
+        {
+            username: String,
+            body: String,
+            createdAt: String
+        }
+    ]
 }, { timestamps: true })
 
 const Pin = mongoose.model('Pin', pinSchema);
