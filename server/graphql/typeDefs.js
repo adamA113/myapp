@@ -18,8 +18,10 @@ const typeDefs = gql`
     type Mutation {
         userSignUp(registerInput: RegisterInput): User! 
         userLogIn(email: String!, password: String!): User!
-        addPin(title: String!, description: String!, imageURL: String!, userId: String!): Pin!
+        addPin(title: String!, description: String!, imageURL: String!): Pin!
         deletePin(id: ID!): String!
+        addComment(pinId: ID!, body: String!): Pin!
+        deleteComment(pinId: ID!, commentId: ID!): Pin!
     }
 
     type Pin {
@@ -29,7 +31,15 @@ const typeDefs = gql`
         imageId: String!
         userId: String!
         user: User!
+        comments: [Comment]!
+        commentsCout: Int!
+    }
 
+    type Comment {
+        id: ID!
+        username: String!
+        body: String!
+        createdAt: String!
     }
 
     type User {
