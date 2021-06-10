@@ -33,6 +33,11 @@ const pinsResolvers = {
     Pin: {
         user: (parent) => {
             return User.findById(parent.userId);
+        },
+
+        commentsCount: (parent) => {
+            console.log("comments count", parent)
+            return parent.comments.length;
         }
     },
 
@@ -68,11 +73,11 @@ const pinsResolvers = {
 
             try {
                 const pin = await Pin.findById(id);
-                if(user.id === pin.userId){
+                if (user.id === pin.userId) {
                     await pin.delete();
                     return "Pin has been successfully deleted";
                 }
-                else{
+                else {
                     throw new AuthenticationError("You are not authorized to delete this pin");
                 }
             }
